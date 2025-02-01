@@ -1,0 +1,40 @@
+{% extends 'core/base_admin.html' %}
+{% load static %}
+{% block page_title %}Configuración{% endblock %}
+{% block content %}
+
+    <style>
+        .contenido-conf{
+            position: relative;
+            background: transparent; /* Fondo transparente */
+            border: 2px solid white;
+            padding: 5px;
+            padding-right: 5px;
+            width: 50%;
+            height: auto;
+            color: white;
+        }
+    </style>
+
+<div class="container">
+    <div class="accordion-item">
+        <h2 class="accordion-header " id="headingThree">
+            <button class="accordion-button collapsed contenido-conf" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <h2>Datos personales</h2>
+            </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse " aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+            <div class="accordion-body contenido-conf">
+                Rol admin
+            </div>
+        </div>
+    </div>
+
+
+    <p>Información adicional</p>
+</div>
+{% endblock %}
+
+ 
+<!-- pendiente-->
+ <!--sacar informacion de trabajor de la plantilla models.py de def Trabajador(contraseña, telefono)-->

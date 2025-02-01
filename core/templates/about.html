@@ -1,0 +1,78 @@
+{% extends 'core/base_front.html' %}
+{% block title %}Página Principal{% endblock %}
+
+
+{% block content %}
+    
+    <div class="bg-dark text-white text-center py-5" style="margin-top: 60px;">
+        <h1 class="display-4">¿Quiénes somos?</h1>
+    </div>
+
+    <!-- Aquí va el contexto de la historia y la expresión de la imagen (Listo, podriamos poner algunas imagenes para darle mas vida) -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="mb-4 text-center">Nuestra Historia</h2>
+                <div class="historia-box p-4">
+                    <p class="text-justify">
+                        Tatuajes Floripondio nació en 2025 gracias a nuestra pasión por el arte y la autoexpresión, desde nuestros inicios queríamos marcar tendencia, 
+                        es por esto que nos hemos dedicado a crear obras únicas centrandonos en marcar experiencias
+                        que trasciendan el tiempo y dejen un hermoso recuerdo en cada persona que pasa por nuestras manos, llevando en cada trabajo un trozo de
+                        historia consigo.
+                    </p>
+                    <p class="text-justify">
+                        Nuestro equipo se compone por profesionales con años de experiencia, cada uno con su propio estilo y especialidad, para encajar con
+                        cada cliente que pase por la puerta. Trabajamos en un ambiente cálido y profesional, asegurándonos de que cada cliente 
+                        se sienta cómodo y seguro durante todo el proceso, ya sea o no su primera vez.
+                    </p>
+                    <p class="text-justify">
+                        Creemos el tatuaje como una forma de una expresión personal tanto del artista como del cliente, por eso, en Tatuajes Floripondio, 
+                        nos esforzamos por llegar a ti, naciendo desde una propuesta de calle hasta el lanzamiento de este sitio deseando poder esparcir un
+                        poquito más con cada paso nuestra pasión por la tinta.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="mb-4 text-center">Un Poco de Nuestro Trabajo</h2>
+                <div class="ratio ratio-16x9">
+                    <iframe 
+                        src="https://www.youtube.com/embed/XIr1Zk83xH0?si=4GibuPoJxJfjVDZm"
+                        title="Video de Tatuajes ambientador" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aquí podemos poner a los miembros del equipo como tal. -->
+
+
+    <!-- Aquí podemos poner el mapa de google para que puedan identificar donde se encuentra la tienda 
+    (No quita que es conveniente poner este detalle en el footer) 
+    Documentación de la integración del mapa por si lo piden: https://developers.google.com/maps/documentation/embed/get-started?utm_source=chatgpt.com&hl=es-419-->
+
+    <section class="container my-5">
+        <h2 class="text-center mb-4">Ven a visitarnos, ¡te esperamos!</h2>
+        <div class="text-center">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3326.6201224249508!2d-70.75506712356331!3d-33.511259273365376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662dcd1fe0c7bab%3A0x4d17b82a7ba77488!2sDuoc%20UC%3A%20sede%20Maipu!5e0!3m2!1ses-419!2scl!4v1736325997300!5m2!1ses-419!2scl" 
+                width="100%" 
+                height="450" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+{% endblock %}

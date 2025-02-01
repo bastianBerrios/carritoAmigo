@@ -1,0 +1,110 @@
+{% extends 'core/base_admin.html' %}
+{% load static %}
+{% block page_title %}Modificar Trabajadores{% endblock %}
+{% block content %}
+
+<style>
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        font-family: Arial, sans-serif;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    #formulario-trabajador {
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 4px;
+    }
+</style>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <!-- Barra de selección para elegir un trabajador -->
+    <label for="trabajador">Seleccionar Trabajador:</label>
+    <select id="trabajador" name="trabajador_id">
+        <option value="">Seleccione un trabajador</option>
+        {% for trabajador in trabajadores %}
+            <option value="{{ trabajador.id_t }}">{{ trabajador.nombreCompleto_t }}</option>
+        {% endfor %}
+    </select>
+    
+    <!-- Formulario dinámico -->
+    <div id="formulario-trabajador" style="display:none;">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="" required>
+
+        <label for="correo">Correo:</label>
+        <input type="email" id="correo" name="correo" value="" required>
+
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" value="" required>
+
+        <label for="contraseña">Contraseña:</label>
+        <input type="text" id="contraseña" name="contraseña" value="" required>
+
+        <button type="submit">Actualizar</button>
+    </div>
+</form>
+
+<script>
+    // Escuchar cambios en el campo de selección
+    document.getElementById('trabajador').addEventListener('change', function () {
+        var trabajadorId = this.value; // Obtener el ID del trabajador seleccionado
+
+        if (trabajadorId) {
+            // Llamada AJAX para obtener los datos del trabajador
+            fetch(`/obtener-detalles-trabajador/${trabajadorId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    // Actualizar los campos del formulario con los datos obtenidos
+                    document.getElementById('nombre').value = data.nombre;
+                    document.getElementById('correo').value = data.correo;
+                    document.getElementById('telefono').value = data.telefono;
+                    document.getElementById('contraseña').value = data.contraseña;
+
+                    // Mostrar el formulario
+                    document.getElementById('formulario-trabajador').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error al obtener los detalles del trabajador:', error);
+                });
+        } else {
+            // Ocultar el formulario si no hay selección
+            document.getElementById('formulario-trabajador').style.display = 'none';
+        }
+    });
+</script>
+
+{% endblock %}
