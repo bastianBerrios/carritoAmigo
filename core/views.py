@@ -1,21 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Cliente, Trabajador, Reserva, Producto
 from django.contrib import messages
-from .forms import ReservaForm
+from .forms import ReservaForm,ModificarTrabajadorForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse 
-from .forms import ModificarTrabajadorForm
+from django.contrib.auth import authenticate, login , logout
+
 
 from .forms import ProductoForm
 
-
+@login_required
 # Vistas básicas
 def index(request):
     return render(request, 'index.html')
 
 def agregarHora(request):
-    return render (resquest, 'agregarHora')
+    return render (request, 'agregarHora')
 
 def about(request):
     return render(request, 'about.html')
@@ -39,6 +40,19 @@ def job(request):
     return render(request, 'job.html')
 
 def login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('index')
+        else:
+            messages.info(request, 'Correo o contraseña incorrectos')
+            return render(request, 'login.html')
+
     return render(request, 'login.html')
 
 def trabajo(request):

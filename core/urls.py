@@ -1,11 +1,5 @@
 from django.urls import path, include
-from .views import (
-    configuracion, index, calendario, confirmarHora, 
-    contacto, crearUsuario, eliminarUsuario, job, login, 
-    reservar, trabajo, about, eliminarUsuarioPorId, 
-    modificarUsuario, obtener_detalles_trabajador, agregarHora,
-    catalogo, agregarProducto, carrito, agregarCarrito, eliminarCarrito, limpiarCarrito
-)
+from .views import *
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -39,7 +33,4 @@ urlpatterns = [
     path('carrito/agregar/<int:producto_id>/', agregarCarrito, name='agregarCarrito'),
     path('carrito/eliminar/<int:producto_id>/', eliminarCarrito, name='eliminarCarrito'),
     path('carrito/limpiar/', limpiarCarrito, name='limpiarCarrito'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 

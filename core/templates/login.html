@@ -29,20 +29,10 @@
                     { email: "xbastianberrios@gmail.com", password: "pass123" },
                     { email: "fernandoalmonacida@gmail.com.com", password: "contra456" }
                     -->
-                    <form id="loginForm" action="#" method="POST">
+                    <form id="loginForm" action="{%url 'login'%}" method="POST">
                         {% csrf_token %}
                         <br>
-
-                        <div class="form-group">
-                            <label for=""> Email </label>
-                            {{ form.email_log }}
-                        </div>
-                        <br>
-                        
-                        <div class="form-group">
-                            <label for=""> Contraseña </label>
-                            {{ form.password_log }}
-                        </div>
+                        {{ form.as_p }}
 
                         <!--<label for="password" class="form-label mt-3">Contraseña:</label>
                         <div class="position-relative">
@@ -57,8 +47,7 @@
                     </form>
                 </div>
             </div>
-            <button type="button" class="boton-volver" style="margin-top: 40px;"
-                onclick="location.href='{% url 'index' %}'">Volver</button>
+            <a class="boton-volver" href="{%url 'index'%}" style="margin-top: 40px;">Volver</a>
         </div>
     </section>
 
