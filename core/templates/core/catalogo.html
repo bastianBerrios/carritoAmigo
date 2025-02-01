@@ -17,8 +17,12 @@
                     <p class="fw-bold">Precio: ${{ producto.precio_p }}</p>
                     <p>Cantidad: {{ producto.cantidad_p }}</p>
                 </div>
-                <div class="card-footer text-center">
+                <div class="card-footer text-center d-flex justify-content-between">
                     <a href="{% url 'agregarCarrito' producto.id_p %}" class="btn btn-success">Agregar al carrito</a>
+                    <a href="{% url 'eliminarProducto' producto.id_p %}" class="btn btn-danger"
+                       onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
+                        Eliminar
+                    </a>
                 </div>
             </div>
         </div>

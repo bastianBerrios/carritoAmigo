@@ -324,12 +324,13 @@ aside {
 
 /* login */
 .body-login {
+  /* Color de fondo con un gradiente personalizado */
   background-color: var(--fondo);
   height: 100vh; /* Altura completa de la ventana */
-  margin: 0; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
+  margin: 0; /* Quita los márgenes del contenedor */
+  display: flex; /* Flexbox para centrar el contenido */
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
   overflow: hidden; /* Oculta contenido fuera del contenedor */
   position: relative; /* Permite posicionar elementos hijos */
   /* Animación para el gradiente */

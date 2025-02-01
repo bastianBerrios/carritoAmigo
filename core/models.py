@@ -1,12 +1,12 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, User
 
 class Trabajador(models.Model):
     id_t = models.AutoField(primary_key=True, verbose_name='Id de Trabajador')
     nombreCompleto_t= models.CharField(max_length=100, verbose_name='Nombre Trabajador')
     rut_t= models.IntegerField(verbose_name='Rut Trabajador')
     numeroTelefono_t= models.IntegerField(verbose_name='Numero Trabajador')
-    email_t= models.CharField(max_length=100, verbose_name='Correo Trabajador')
+    email_t= models.CharField(max_length=100, unique=True, verbose_name='Correo Trabajador')
     contrasennia_t= models.CharField(max_length=25, verbose_name='Contraseña Trabajador')
 
     def __str__(self):
@@ -35,15 +35,15 @@ class Reserva(models.Model):
     def __str__(self):
         return str(self.id_r)
 
-
-# catalogo
-class Producto(models.Model):
-    id_p = models.AutoField(primary_key=True, verbose_name='Id Producto')  # O cualquier otro valor predeterminado
-    nombre_p = models.CharField( max_length=100, verbose_name='Nombre Producto')
-    descripcion_p = models.TextField(verbose_name='Descripcion Producto')
-    precio_p = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Precio Producto')
-    cantidad_p = models.PositiveIntegerField(verbose_name='Cantidad Producto')
-    imagen_p = models.ImageField(upload_to='producto/', blank=True, null=True, verbose_name='Imagen Producto')
+class ClienteCuenta(models.Model):
+    id_cc = models.AutoField(primary_key=True, verbose_name='Id Cliente')
+    nombreClienteCuenta = models.CharField(max_length=100, verbose_name="Nombre Completo Cliente")
+    emailClienteCuenta = models.CharField(max_length=100, unique=True, verbose_name='Correo Cliente')
+    telefonoClienteCuenta = models.IntegerField(verbose_name="Teléfono Cliente")
+    direccionClienteCuenta = models.CharField(max_length=100, verbose_name='Direccion Cliente')
+    contrasenniaaClienteCuenta = models.CharField(max_length=25, verbose_name='Contraseña Cliente')  # Agregamos contraseña
 
     def __str__(self):
-        return self.nombre_p
+        return self.nombreClienteCuenta
+
+    

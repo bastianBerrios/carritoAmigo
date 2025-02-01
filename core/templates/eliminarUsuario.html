@@ -1,32 +1,35 @@
 {% extends 'core/base_admin.html' %}
-{% load static %}
+{% load static crispy_forms_tags %}
 {% block page_title %}Eliminar trabajadores{% endblock %}
 {% block content %}
 
 <!-- Contenido principal -->
 <div class="flex-fill p-3">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nombre Completo</th>
-                <th>RUT</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for trabajador in trabajadores %}
-            <tr>
-                <td>{{ trabajador.nombreCompleto_t }}</td>
-                <td>{{ trabajador.rut_t }}</td>
-                <td>
-                    <button class="btn btn-danger btn-sm" onclick="eliminarUsuario({{ trabajador.id_t }})">
-                        <i class="bi bi-trash"></i> Eliminar
-                    </button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <form method="post">
+        {% csrf_token %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre Completo</th>
+                    <th>RUT</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trabajador in trabajadores %}
+                <tr>
+                    <td>{{ trabajador.nombreCompleto_t }}</td>
+                    <td>{{ trabajador.rut_t }}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="eliminarUsuario({{ trabajador.id_t }})" type="button">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
 </div>
 
 <!-- Scripts -->

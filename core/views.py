@@ -1,21 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Cliente, Trabajador, Reserva, Producto
+from .models import Cliente,Trabajador,Reserva, ClienteCuenta
+from .forms import ReservaForm, ModificarTrabajadorForm, CrearUsuarioForm,RegistroClienteCuentaForm
 from django.contrib import messages
-from .forms import ReservaForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse 
-from .forms import ModificarTrabajadorForm
-
-from .forms import ProductoForm
+from django.http import HttpResponseRedirect
 
 
-# Vistas básicas
-def index(request):
-    return render(request, 'index.html')
+def configuracion(request):
+    return render(request, 'configuracion.html')
 
 def agregarHora(request):
-    return render (resquest, 'agregarHora')
+    return render(request, 'agregarHora.html')
+
+def index(request):
+    return render(request, 'index.html')
 
 def about(request):
     return render(request, 'about.html')
@@ -39,50 +39,48 @@ def job(request):
     return render(request, 'job.html')
 
 def login(request):
-    return render(request, 'login.html')
+    return render(request, 'login/index.html')
+
+def modificarUsuario(request):
+    return render(request, 'modificarUsuario.html')
 
 def trabajo(request):
     return render(request, 'trabajo.html')
 
-def configuracion(request):
-    return render(request, 'configuracion.html')
-
-# Vista de reservas
 def reservar(request):
     if request.method == 'POST':
-        form = ReservaForm(request.POST, request.FILES)  # Manejo de archivos
+        form = ReservaForm(request.POST, request.FILES)  # Agregar request.FILES para manejar archivos
         if form.is_valid():
-            # Obtener los datos del cliente desde el formulario
+            # Obtener el cliente del formulario
             email = form.cleaned_data['email_c']
             nombre_completo_c = form.cleaned_data['nombreCompleto_c']
             numeroTelefono_c = form.cleaned_data['numeroTelefono_c']
 
-            # Crear o actualizar cliente
+            # Crear o obtener el cliente
             cliente, created = Cliente.objects.get_or_create(
                 email_c=email,
-                defaults={
-                    'nombreCompleto_c': nombre_completo_c,
-                    'numeroTelefono_c': numeroTelefono_c
-                }
+                defaults={'nombreCompleto_c': nombre_completo_c, 'numeroTelefono_c': numeroTelefono_c},
             )
 
-            # Actualizar datos del cliente si ya existe
+            # Si el cliente ya existe, actualizar los datos si es necesario
             if not created:
                 if cliente.nombreCompleto_c != nombre_completo_c or cliente.numeroTelefono_c != numeroTelefono_c:
                     cliente.nombreCompleto_c = nombre_completo_c
                     cliente.numeroTelefono_c = numeroTelefono_c
                     cliente.save()
 
-            # Asignar el cliente a la reserva y guardar
+            # Asignar el cliente a la reserva
             reserva = form.save(commit=False)
-            reserva.cliente_r = cliente
-            reserva.save()
+            reserva.cliente_r = cliente  # Asignar el cliente
+            reserva.save()  # Guardar la reserva
 
-            # Mostrar mensaje de éxito y redirigir
+            # Muestra un mensaje de éxito
             messages.success(request, '¡Reserva realizada con éxito!')
-            return redirect('index')  # Cambia por el nombre de la vista de redirección
+
+            # Renderiza la página con el formulario vacío
+            return redirect('index') # Cambiar por el nombre de la vista de redirección
         else:
-            # Manejo de errores del formulario
+            # Si el formulario no es válido, muestra un mensaje de error
             messages.error(request, 'Hubo un error con la reserva. Por favor, revisa los datos.')
             return render(request, 'reservar.html', {'form': form})
     else:
@@ -90,6 +88,55 @@ def reservar(request):
 
     return render(request, 'reservar.html', {'form': form})
 
+def registro_cliente_cuenta(request):
+    if request.method == "POST":
+        form = RegistroClienteCuentaForm(request.POST)
+        if form.is_valid():
+            # Guardar el cliente cuenta y el usuario asociado
+            form.save()
+            messages.success(request, "Tu cuenta ha sido creada exitosamente. ¡Ahora puedes iniciar sesión!")
+            return redirect('login')  # Redirigir a la página de login
+        else:
+            # Si el formulario no es válido, mostramos los errores
+            messages.error(request, "Por favor corrige los errores en el formulario.")
+    else:
+        form = RegistroClienteCuentaForm()
+    
+    return render(request, 'registro_cliente_cuenta.html', {'form': form})
+
+def login(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        # Verificar si es un Trabajador
+        trabajador = Trabajador.objects.filter(email_t=email, contrasennia_t=password).first()
+        if trabajador:
+            request.session['usuario_id'] = trabajador.id_t
+            request.session['tipo_usuario'] = 'trabajador'
+            messages.success(request, "¡Bienvenido, Trabajador!")
+            return redirect('calendario')  # Redirigir a la página de trabajadores
+        
+        # Verificar si es un ClienteCuenta
+        cliente = ClienteCuenta.objects.filter(emailClienteCuenta=email, contraseñaClienteCuenta=password).first()
+        if cliente:
+            request.session['usuario_id'] = cliente.id_cc
+            request.session['tipo_usuario'] = 'cliente'
+            messages.success(request, "¡Bienvenido, Cliente!")
+            return redirect('index')  # Redirigir a la página principal
+
+        messages.error(request, "Credenciales incorrectas")
+    
+    return render(request, "login.html")
+
+def logout(request):
+    request.session.flush()
+    messages.success(request, "Has cerrado sesión")
+    return redirect('index')
+
+
+
+#parte de Admin (job.html)
 def listar_trabajadores(request):
     trabajadores = Trabajador.objects.all()  # Obtiene todos los trabajadores
     return render(request, 'eliminarUsuario.html', {'trabajadores': trabajadores})
@@ -112,25 +159,25 @@ def eliminarUsuarioPorId(request, id_t):
     return JsonResponse({'error': 'Método no permitido.'}, status=405)
 
 
-#de modificarUsuarios.html(de trabajadores parte admin)
-
 def modificarUsuario(request):
-    # Obtener todos los trabajadores
-    trabajadores = Trabajador.objects.all()
-
     if request.method == 'POST':
-        # Aquí es donde manejarás la lógica para actualizar un trabajador
-        trabajador_id = request.POST.get('trabajador_id')
-        trabajador = Trabajador.objects.get(id=trabajador_id)
-        
-        # Actualiza los campos según el formulario enviado (ej. nombre, email, etc.)
-        trabajador.nombre = request.POST.get('nombre')
-        trabajador.correo = request.POST.get('correo')
-        trabajador.telefono = request.POST.get('telefono')
-        trabajador.contraseña = request.POST.get('contraseña')
-        trabajador.save()
+        trabajador_id = request.POST.get('trabajador_id')  # Obtener el ID del trabajador
+        trabajador = Trabajador.objects.get(id_t=trabajador_id)  # Usar 'id_t' en lugar de 'id'
 
+        # Actualizar los campos del trabajador
+        trabajador.nombreCompleto_t = request.POST.get('nombre')
+        trabajador.email_t = request.POST.get('correo')
+        trabajador.numeroTelefono_t = request.POST.get('telefono')
+        trabajador.contrasennia_t = request.POST.get('contraseña')  # Asegúrate de que los nombres de los campos coincidan con tu modelo
+
+        trabajador.save()  # Guardar los cambios
+
+        # Redirigir con el parámetro 'success=true' en la URL
+        return HttpResponseRedirect(request.path + '?success=true')
+
+    trabajadores = Trabajador.objects.all()
     return render(request, 'modificarUsuario.html', {'trabajadores': trabajadores})
+
 
 def obtener_detalles_trabajador(request, id_t):
     trabajador = Trabajador.objects.get(id=id_t)
@@ -141,6 +188,7 @@ def obtener_detalles_trabajador(request, id_t):
         'contraseña': trabajador.contraseña,
     }
     return JsonResponse(data)
+
 
 def obtener_detalles_trabajador(request, id_t):
     # Buscar al trabajador por ID
@@ -156,54 +204,37 @@ def obtener_detalles_trabajador(request, id_t):
     except Trabajador.DoesNotExist:
         return JsonResponse({'error': 'Trabajador no encontrado'}, status=404)
 
-# catalogo
-# mostra el fakin catalogo
-def catalogo(request):
-    productos = Producto.objects.all()
-    return render(request, 'core/catalogo.html', {'productos':productos})
 
-# agregar el fakin producto
-def agregarProducto(request):
+
+
+
+
+
+def crearUsuario(request):
+    form = CrearUsuarioForm()  # Inicializa el formulario *aquí*, antes del if
+
     if request.method == 'POST':
-        form = ProductoForm(request.POST, request.FILES)
+        form = CrearUsuarioForm(request.POST)  # Reasigna el formulario *solo* si es POST
         if form.is_valid():
-            form.save() # guarda el producto
-            messages.success(request, '¡Producto Agregado!')
-            return redirect('catalogo')  # manda al catalogo al agregar
+            rut = form.cleaned_data['rut_t']
+            email = form.cleaned_data['email_t']
+
+            if Trabajador.objects.filter(rut_t=rut).exists():
+                messages.error(request, 'Ya existe un trabajador con este RUT.')
+            elif Trabajador.objects.filter(email_t=email).exists():
+                messages.error(request, 'Ya existe un trabajador con este correo.')
+            else:
+                form.save()
+                messages.success(request, 'Trabajador registrado exitosamente.')
+                return redirect('crearUsuario')  # ¡REDIRECCIÓN AQUÍ!
         else:
-            messages.success(request, '¡Error al Agregar! Revisa los datos...')
-    else:
-        form = ProductoForm()
-    return render(request, 'agregarProducto.html', {'form': form})
+            for field, error_list in form.errors.items():
+                for error in error_list:
+                    messages.error(request, f"{form[field].label}: {error}")
+            # Si hay errores en el formulario, *también* redirige para mostrar los mensajes.
+            return redirect('crearUsuario')
 
-# carrito de compras
-def agregarCarrito(request, producto_id):
-    try:
-        producto = Producto.objects.get(id_p=producto_id)  # Asegúrate de que el campo se llame id_p
-        carrito = request.session.get('carrito', {})
-        if producto_id in carrito:
-            carrito[producto_id] += 1
-        else:
-            carrito[producto_id] = 1
-        request.session['carrito'] = carrito
-        return redirect('carrito')  # Redirige a la página del carrito
-    except Producto.DoesNotExist:
-        return redirect('producto_no_encontrado')  # Manejo de error si el producto no existe
+    return render(request, 'crearUsuario.html', {'form': form})  
 
-def eliminarCarrito(request, id_p):
-    carrito = Carrito(request)
-    producto = get_object_or_404(Producto, id_p=id_p)
-    carrito.eliminar(producto)
-    messages.success(request, f'{producto.nombre_p} eliminado del carrito.')
-    return redirect('carrito')
 
-def limpiarCarrito(request):
-    carrito = Carrito(request)
-    carrito.limpiar()
-    messages.info(request, 'Carrito limpiado con éxito.')
-    return redirect('carrito')
 
-def carrito(request):
-    return render(request, 'core/carrito.html', {
-        'carrito': request.session.get('carrito', {})
-    })

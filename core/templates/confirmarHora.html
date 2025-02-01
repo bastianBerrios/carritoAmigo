@@ -1,232 +1,178 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width: 100%; height: 100vh; width:100%" />
-    <title>Galería de Trabajos - Tatuajes Floripondio - Trabajadores Unidos</title> 
+    <title>Galería de Trabajos - Tatuajes Floripondio - Trabajadores Unidos</title>
     <meta name="description" content="Trabajo con amor para nuestros queridos clientes">
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="icon" type="image/png" sizes="3232" href="{% static 'img/logo.png' %}">
     <link rel="stylesheet" href="{% static 'css/css.css' %}">
-    <style>
-        .main-container {
-            display: flex;
-            height: 100vh;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #343a40;
-            color: white;
-            padding: 20px;
-            height: 100%;
-            overflow-y: auto;
-        }
-        .content-container {
-            flex-grow: 1;
-            padding: 20px;
-        }
-        .page-header {
-            margin-bottom: 20px;
-        }
         .submenu {
             display: none;
             margin-top: 10px;
         }
-        .submenu.active {
-            display: block;
-        }
-        .no-link {
-            text-decoration: none; 
-            color: inherit; 
-        }
     </style>
-    {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-
-    <div class="main-container">
-            <!-- Barra Lateral -->
-        <div class="sidebar mb-4 bg-dark text-white p-3"><!--d-flex-->
-            <div class="text-center mb-4 ">   
-                <img src="{% static 'img/logo.png' %}" alt="Logo Floripondio" style="width: 100px;">
-                <a class="no-link" href="{% url 'job' %}">
-                    <h3 class="mt-2">Floripondio</h3>
-                </a>
-            </div> <!--cierre de text-center...-->
-                <hr>
-                <!-- Opciones de navegación -->
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2">
-                        <a href="#" class="nav-link text-white" id="cuentas">
-                            <i class="bi bi-person-fill"></i> Cuentas
-                        </a>
-                        <div class="submenu" id="submenuCuentas">
-                            <ul>
-                                <li class="li-2"><a href="{% url 'crearUsuario' %}" class="nav-link text-white">Crear cuenta</a></li>
-                                <li class="li-2"><a href="{% url 'modificarUsuario' %}" class="nav-link text-white">Modificar cuenta</a></li>
-                                <li class="li-2"><a href="{% url 'eliminarUsuario' %}" class="nav-link text-white">Eliminar cuenta</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="#" class="nav-link text-white" id="horas">
-                            <i class="bi bi-clock-fill"></i> Horas
-                        </a>
-                        <div class="submenu" id="submenuHoras">
-                            <ul>
-                                <li class="li-2"><a href="{% url 'agregarHora' %}" class="nav-link text-white" class="nav-link text-white">Agregar horas</a></li>
-                                <li class="li-2"><a href="{% url 'confirmarHora' %}" class="nav-link text-white">Modificar horas</a></li>
-                                <li class="li-2"><a href="#" class="nav-link text-white">Eliminar horas</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="{% url 'configuracion' %}" class="nav-link text-white">
-                            <i class="bi bi-gear-fill"></i> Configuración
-                        </a>
-                    </li>
-                </ul>
-
-                 <!-- Cerrar sesión -->
-                <div class="mt-auto text-center">
-                    <a href="{% url 'login' %}" class="btn btn-danger w-100">Cerrar sesión</a>
-                </div>
-        </div> <!--cierre de sidebar-->
-
-            <!-- Contenido principal -->
-            <div class="content-container"> <!-- flex-fill p-3-->
-                <div class="page-header">
-                    <h1>{% block page_title %}Galería de Trabajos{% endblock %}</h1>
-                </div>
-                {% block content %}
-                {% endblock %}
+    <!-- Barra Lateral -->
+    <div class="d-flex">
+        <div class="bg-dark text-white p-3" style="width: 250px; height: 100vh;">
+            <!-- Logo y Nombre -->
+            <div class="text-center mb-4">
+                <img src="img/logo.png" alt="Logo Floripondio" style="width: 100px;">
+                <h3 class="mt-2">Floripondio</h3>
             </div>
- 
-    </div>
-   
+            <hr>
+            
+            <!-- Opciones de navegación -->
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a href="#" class="nav-link text-white" id="cuentas">
+                        <i class="bi bi-person-fill"></i> Cuentas
+                    </a>
+                    <div class="submenu" id="submenuCuentas">
+                        <ul>
+                            <li class="li-2"><a href="#" class="nav-link text-white">Crear cuenta</a></li>
+                            <li class="li-2"><a href="#" class="nav-link text-white">Modificar cuenta</a></li>
+                            <li class="li-2"><a href="#" class="nav-link text-white">Eliminar cuenta</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="#" class="nav-link text-white" id="horas">
+                        <i class="bi bi-clock-fill"></i> Horas
+                    </a>
+                    <div class="submenu" id="submenuHoras">
+                        <ul>
+                            <li class="li-2"><a href="confirmarHora.html" class="nav-link text-white">Agregar horas</a></li>
+                            <li class="li-2"><a href="#" class="nav-link text-white">Modificar horas</a></li>
+                            <li class="li-2"><a href="#" class="nav-link text-white">Eliminar horas</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="#" class="nav-link text-white">
+                        <i class="bi bi-gear-fill"></i> Configuración
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Cerrar sesión -->
+            <div class="mt-auto text-center">
+                <a href="login.html" class="btn btn-danger w-100">Cerrar sesión</a>
+            </div>
+        </div>
+
+            
+        <div class="container mt-5">
+            <br>
+            <h1 class="text-center">Buscar Horas Disponibles</h1>
     
+            <!-- Campo de Entrada para Buscar Hora -->
+            <div class="row justify-content-center my-4">
+                <div class="col-md-6">
+                    <label for="horaInput" class="form-label" style="color: white;">Ingrese una hora (formato HH:MM):</label>
+                    <input type="time" id="horaInput" class="form-control" placeholder="Ejemplo: 08:00">
+                    <button id="buscarBtn" class="btn btn-primary mt-3 w-100">Buscar Disponibilidad</button>
+                </div>
+            </div>
+    
+            <!-- Resultados de Días Disponibles -->
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="text-center">Días Disponibles para la Hora: <span id="horaSeleccionada"></span></h3>
+                    <div id="resultados" class="text-center mt-4">
+                        <!-- Días Disponibles se mostrarán aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-
-      <!-- Scripts -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-      <script>
-          // Función para mostrar/ocultar el submenu
-          function toggleSubmenu(menuId, submenuId) {
-              var submenu = document.getElementById(submenuId);
-              var otherSubmenus = ['submenuCuentas', 'submenuHoras'].filter(id => id !== submenuId);
-  
-              // Ocultar otros submenús
-              otherSubmenus.forEach(function(id) {
-                  document.getElementById(id).style.display = 'none';
-              });
-  
-              // Mostrar/ocultar el submenú del menú actual
-              if (submenu.style.display === 'block') {
-                  submenu.style.display = 'none';
-              } else {
-                  submenu.style.display = 'block';
-              }
-          }
-  
-          // Eventos de clic para Cuentas y Horas
-          document.getElementById('cuentas').addEventListener('click', function(event) {
-              event.preventDefault(); // Evita que se navegue
-              toggleSubmenu('cuentas', 'submenuCuentas');
-          });
-  
-          document.getElementById('horas').addEventListener('click', function(event) {
-              event.preventDefault(); // Evita que se navegue
-              toggleSubmenu('horas', 'submenuHoras');
-          });
-
-
-
-
-          const disponibilidad = {
-    "08:00": ["Lunes", "Martes", "Jueves", "Viernes"],
-    "08:30": ["Miércoles", "Viernes", "Sábado", "Domingo"],
-    "09:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "09:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "10:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "10:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "11:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "11:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "12:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "12:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "13:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "13:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "14:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "14:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "15:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "15:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "16:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "16:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "17:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "17:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "18:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "18:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "19:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "19:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "20:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "20:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "21:00": ["Martes", "Jueves", "Sábado", "Domingo"],
-    "21:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
-    "22:00": ["Martes", "Jueves", "Sábado", "Domingo"]
-};
+    
+    <script>
+        const disponibilidad = {
+        "08:00": ["Lunes", "Martes", "Jueves", "Viernes"],
+        "08:30": ["Miércoles", "Viernes", "Sábado", "Domingo"],
+        "09:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "09:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "10:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "10:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "11:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "11:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "12:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "12:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "13:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "13:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "14:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "14:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "15:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "15:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "16:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "16:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "17:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "17:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "18:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "18:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "19:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "19:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "20:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "20:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "21:00": ["Martes", "Jueves", "Sábado", "Domingo"],
+        "21:30": ["Lunes", "Miércoles", "Viernes", "Sábado"],
+        "22:00": ["Martes", "Jueves", "Sábado", "Domingo"]
+    };
 
 
+        const buscarBtn = document.getElementById('buscarBtn');
+        const horaInput = document.getElementById('horaInput');
+        const resultados = document.getElementById('resultados');
+        const horaSeleccionada = document.getElementById('horaSeleccionada');
 
-    const buscarBtn = document.getElementById('buscarBtn');
-    const horaInput = document.getElementById('horaInput');
-    const resultados = document.getElementById('resultados');
-    const horaSeleccionada = document.getElementById('horaSeleccionada');
+        buscarBtn.addEventListener('click', () => {
+            const hora = horaInput.value;
 
-    buscarBtn.addEventListener('click', () => {
-        const hora = horaInput.value;
-
-        // Validar que el usuario haya ingresado una hora
-        if (!hora) {
-            alert('Por favor, ingrese una hora válida.');
-            return;
-        }
-
-        // Actualizar la hora seleccionada
-        horaSeleccionada.textContent = hora;
-
-        // Limpiar resultados previos
-        resultados.innerHTML = '';
-
-        // Buscar días disponibles para esa hora
-        const diasDisponibles = disponibilidad[hora];
-
-        if (diasDisponibles && diasDisponibles.length > 0) {
-            if (hora === "14:00") {
-                const highlightElement = document.createElement('div');
-                highlightElement.className = 'badge highlight mx-2';
-                highlightElement.textContent = 'Hora destacada (14:00)';
-                resultados.appendChild(highlightElement);
+            // Validar que el usuario haya ingresado una hora
+            if (!hora) {
+                alert('Por favor, ingrese una hora válida.');
+                return;
             }
-            diasDisponibles.forEach(dia => {
-                const timeElement = document.createElement('span');
-                timeElement.className = 'badge bg-success mx-2';
-                timeElement.textContent = dia;
-                resultados.appendChild(timeElement);
-            });
-        } else {
-            resultados.innerHTML = '<p class="text-danger">No hay días disponibles para esta hora.</p>';
-        }
-    });
 
+            // Actualizar la hora seleccionada
+            horaSeleccionada.textContent = hora;
 
+            // Limpiar resultados previos
+            resultados.innerHTML = '';
 
-     // Función para mostrar/ocultar el submenu
-     function toggleSubmenu(menuId, submenuId) {
+            // Buscar días disponibles para esa hora
+            const diasDisponibles = disponibilidad[hora];
+
+            if (diasDisponibles && diasDisponibles.length > 0) {
+                if (hora === "14:00") {
+                    const highlightElement = document.createElement('div');
+                    highlightElement.className = 'badge highlight mx-2';
+                    highlightElement.textContent = 'Hora destacada (14:00)';
+                    resultados.appendChild(highlightElement);
+                }
+                diasDisponibles.forEach(dia => {
+                    const timeElement = document.createElement('span');
+                    timeElement.className = 'badge bg-success mx-2';
+                    timeElement.textContent = dia;
+                    resultados.appendChild(timeElement);
+                });
+            } else {
+                resultados.innerHTML = '<p class="text-danger">No hay días disponibles para esta hora.</p>';
+            }
+        });
+    </script>
+
+    <script>
+        // Función para mostrar/ocultar el submenu
+        function toggleSubmenu(menuId, submenuId) {
             var submenu = document.getElementById(submenuId);
             var otherSubmenus = ['submenuCuentas', 'submenuHoras'].filter(id => id !== submenuId);
 
@@ -253,10 +199,7 @@
             event.preventDefault(); // Evita que se navegue
             toggleSubmenu('horas', 'submenuHoras');
         });
-      </script>
-
-
-
+    </script>
 
 </body>
-</html> 
+</html>
