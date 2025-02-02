@@ -1,4 +1,0 @@
-pip install pillow
-pip install crispy
-pip install django-crispy-forms
-pip install crispy-bootstrap5
