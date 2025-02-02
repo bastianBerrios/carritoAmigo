@@ -1,0 +1,102 @@
+{% extends 'core/base_front.html' %}
+{% load static %}
+{% block title %}Página Principal{% endblock %}
+{% block content %}
+
+    <div class="imagen-text-over">
+      <img src="{% static 'img/tatto-event-surprise-1.jpg' %}" alt="Imagen de tatuaje">
+      <div class="texto-sobrepuesto">
+          <p>Gracias por Elegirnos, estamos ansiosos por colaborar contigo en cada una de tus etapas. ¿Que estas esperando? ¡Reserva!</p>
+      </div>
+    </div>
+
+  <div class="imagen-text-dif-under-1"> 
+    <div class="contenedor-rectangulo">
+      <p class="texto-difuminado">
+        <div class="div-confianza">
+          <strong>¡PUEDES CONTAR CON NOSOTROS SI LO QUE NECESITAS ES!</strong>
+            <!--Hay que tirarlo para abajo del texto en strong -->
+            <li> Atención al Cliente </li>
+            <li> Un Servicio Aprobado por Cientos de Clientes </li>
+            <li> Tatuadores Certificados y Reconocidos </li>
+            <li> Cotizacion de Tatuajes Acorde al Tipo y Dificultad </li>
+            <li> Trasparencia en el Servicio</li>
+        </div>
+      </p>
+    </div>
+  </div>
+  <br>
+  <div class="imagen-text-over">
+    <img src="{% static 'img/tatcar/98.jpg' %}" alt="Imagen de tatuaje">
+  <br>
+  <!-- video -->
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <h2 class="mb-4 text-center">Se Parte de Nuestra Comunidad</h2>
+        <div class="ratio ratio-16x9">
+          <iframe src="https://www.youtube.com/embed/7g_Yt0M6CeU?si=5_ZErTeKnEz44Sya" 
+            title="Video de Tatuajes ambientador"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <!-- introduccion a floripondrio -->
+  <div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4 text-center"><strong>FLORIPONDIO</strong> LLEVA TATUADO EN SU ESCENCIA</h2>
+            <p class="lead text-center" style="color: white;" >
+              Desde una perspectiva en que todo es arte, desde la arquitectura 
+              hasta la forma de comunicar nuestro mensaje, es todo visto como un arte en sí. Todo lo que ve o siente una persona 
+              dentro del estudio está relacionado con diferentes experiencias para cada sentido. Estamos en una constante 
+              evolución para llevar lo urbano a un espacio donde artistas y clientes pueden juntarse a crear en conjunto 
+              experiencias inolvidables. El tatuaje es mucho más que tinta y piel; hay conexión, emociones, historias y por 
+              sobre todo un ánimo de aprendizaje constante, que nos lleva día a día a mejorar en diferentes formas y hacer que 
+              cada cliente se lleve mucho más que una obra de calidad
+            </p>
+        </div>
+      </div>
+  </div>
+  <br>
+  <div class="container d-flex justify-content-center">
+    <div class="carousel slide w-75" id="carouselExampleIndicators" data-bs-ride="carousel">
+      <!-- Indicadores del carrusel -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <!-- Carrusel -->
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{% static 'img/tatcar/tatuaje10.jpeg' %}" class="d-block w-100" alt="Imagen 1">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'img/tatcar/tatuaje20.jpeg' %}" class="d-block w-100" alt="Imagen 2">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'img/tatcar/tatuaje28.jpeg' %}" class="d-block w-100" alt="Imagen 3">
+        </div>
+      </div>
+      <!-- Controles -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+
+  <br>
+
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+{% endblock %}
