@@ -39,7 +39,7 @@ def job(request):
     return render(request, 'job.html')
 
 def login(request):
-    return render(request, 'login/index.html')
+    return render(request, 'login.html')
 
 def modificarUsuario(request):
     return render(request, 'modificarUsuario.html')
